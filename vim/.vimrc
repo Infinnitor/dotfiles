@@ -26,8 +26,11 @@ set cinoptions=m1
 let g:rust_recommended_style = 0
 let g:rustfmt_autosave = 1
 let g:python_recommended_style = 0
+let g:python_highlight_string_format = 1
+let g:python_highlight_builtin_objs  = 1
 
 " let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+let g:syntastic_python_checkers = ["pyflakes"]
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
 
 set wildmode=longest,list
@@ -43,7 +46,8 @@ colorscheme tokyonight
 let g:tokyonight_style = 'night' " available: night, storm
 let g:tokyonight_enable_italic = 1
 
-nmap <C-p> :NERDTreeToggle<CR>
+let mapleader = ","
+nmap <leader>p :NERDTreeToggle<CR>
 
 autocmd BufWritePre * :TrailerTrim
 set whichwrap+=<,>,[,]
@@ -51,6 +55,7 @@ command W update
 set number!
 set nowrap
 set noswapfile
+set clipboard=unnamedplus
 
 " air-line
 let g:airline_powerline_fonts = 1
