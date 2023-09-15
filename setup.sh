@@ -1,5 +1,5 @@
 #!/bin/bash
-#
-mv vim/* ~/ -r
-mv alacritty/alacritty ~/.config/ -r
-mv rustfmt ~/.config -r
+
+cp vim/* ~/ -r
+cp alacritty/alacritty ~/.config/ -r
+cp rustfmt ~/.config -r
