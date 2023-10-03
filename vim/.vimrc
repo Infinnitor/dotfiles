@@ -11,6 +11,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'vim-syntastic/syntastic'
 Plug 'ghifarit53/tokyonight-vim'
 Plug 'ap/vim-css-color'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 call plug#end()
 
 set encoding=UTF-8
@@ -46,8 +48,15 @@ colorscheme tokyonight
 let g:tokyonight_style = 'night' " available: night, storm
 let g:tokyonight_enable_italic = 1
 
-let mapleader = ","
+let mapleader = " "
 nmap <leader>p :NERDTreeToggle<CR>
+nmap <leader>a :tabp<CR>
+nmap <leader>d :tabn<CR>
+nmap <leader>/ :Commentary<CR>
+nmap <leader>b di(
+
+let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsListSnippets="<leader>s"
 
 autocmd BufWritePre * :TrailerTrim
 set whichwrap+=<,>,[,]
@@ -57,6 +66,8 @@ set nowrap
 set noswapfile
 set clipboard=unnamedplus
 
+let &t_SI = "\e[5 q"
+let &t_EI = "\e[2 q"
 " air-line
 let g:airline_powerline_fonts = 1
 
@@ -64,7 +75,6 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-"
 " unicode symbols
 let g:airline_left_sep = '»'
 let g:airline_left_sep = '▶'
