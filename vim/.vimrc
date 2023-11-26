@@ -13,6 +13,7 @@ Plug 'ghifarit53/tokyonight-vim'
 Plug 'ap/vim-css-color'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'jwalton512/vim-blade'
 call plug#end()
 
 set encoding=UTF-8
@@ -33,6 +34,7 @@ let g:python_highlight_builtin_objs  = 1
 
 " let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 let g:syntastic_python_checkers = ["pyflakes"]
+let g:syntastic_rust_checkers = ["cargo"]
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
 
 set wildmode=longest,list
@@ -54,13 +56,20 @@ nmap <leader>a :tabp<CR>
 nmap <leader>d :tabn<CR>
 nmap <leader>/ :Commentary<CR>
 nmap <leader>b di(
+nmap <leader>w 10k
+nmap <leader>s 10j
 
 let g:UltiSnipsExpandTrigger="<tab>"
 " let g:UltiSnipsListSnippets="<leader>s"
+let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinSize = 50
 
 autocmd BufWritePre * :TrailerTrim
 set whichwrap+=<,>,[,]
+
 command W update
+command Linewrap :set wrap linebreak
+
 set number!
 set nowrap
 set noswapfile
@@ -72,7 +81,7 @@ let &t_EI = "\e[2 q"
 let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+	let g:airline_symbols = {}
 endif
 
 " unicode symbols
