@@ -70,6 +70,8 @@ set whichwrap+=<,>,[,]
 
 command W update
 command Linewrap :set wrap linebreak
+" command Popout :execute 'silent :!alacritty --working-directory %:p:h --command bash --init-file <(vim %:p:h) &' | redraw! | q
+command Popout :execute 'silent :!alacritty --working-directory %:p:h --command bash --init-file <(echo ". \"$HOME/.bashrc\"; vim %:p") &' | redraw! | q
 
 set number!
 set nowrap
