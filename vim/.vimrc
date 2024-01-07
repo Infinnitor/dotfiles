@@ -14,6 +14,8 @@ Plug 'ap/vim-css-color'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'jwalton512/vim-blade'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'dylanaraps/wal.vim'
 call plug#end()
 
 set encoding=UTF-8
@@ -32,7 +34,7 @@ let g:python_recommended_style = 0
 let g:python_highlight_string_format = 1
 let g:python_highlight_builtin_objs  = 1
 
-" let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 let g:syntastic_python_checkers = ["pyflakes"]
 let g:syntastic_rust_checkers = ["cargo"]
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
@@ -42,10 +44,10 @@ set wildmode=longest,list
 set background=dark
 syntax enable
 set backspace=indent,eol,start
-set termguicolors
-" colorscheme jellybeans
+" colorscheme wal
 set fillchars+=vert:│
 
+set termguicolors
 colorscheme tokyonight
 let g:tokyonight_style = 'night' " available: night, storm
 let g:tokyonight_enable_italic = 1
@@ -55,12 +57,11 @@ nmap <leader>p :NERDTreeToggle<CR>
 nmap <leader>a :tabp<CR>
 nmap <leader>d :tabn<CR>
 nmap <leader>/ :Commentary<CR>
-nmap <leader>b di(
 nmap <leader>w 10k
 nmap <leader>s 10j
+" nmap <leader>f :CtrlP<CR>
 
 let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsListSnippets="<leader>s"
 let g:NERDTreeWinPos = "right"
 let g:NERDTreeWinSize = 50
 
