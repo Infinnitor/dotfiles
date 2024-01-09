@@ -1,0 +1,213 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+background = #0a0a0a
+background-alt = #1f1f1f
+foreground = #bfbfbf
+foreground-alt = #7a7a7a
+
+[bar/mybar]
+font-0 = "JetBrains Mono Nerd Font:pixelsize=13;0"
+
+width = 100%
+height = 40px
+; offset-x = 0.5%
+; offset-y = 0.5%
+; fixed-center = true
+
+override-redirect = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3pt
+
+; border-size = 4pt
+border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+
+module-padding-left = 1
+
+separator-foreground = ${colors.disabled}
+
+modules-left = hello xworkspaces
+modules-right = systray pulseaudio backlight memory cpu time date battery
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+enable-ipc = true
+
+wm-restack = i3
+
+[module/hello]
+type = custom/text
+content = 󰣐
+content-padding = 1
+click-left = "flameshot gui"
+; click-left = "notify-send hello 󰣐"
+; click-left = "alacritty --hold -e ncal -b"
+
+[module/systray]
+type = internal/tray
+
+tray-spacing = 8px
+tray-foreground = ${colors.foreground}
+
+[module/xworkspaces]
+type = internal/xworkspaces
+
+label-active = %name%
+label-active-background = ${colors.background-alt}
+label-active-underline = ${colors.primary}
+label-active-foreground = ${colors.foreground}
+label-active-padding = 1
+
+label-occupied = %name%
+label-occupied-padding = 1
+
+label-urgent = %name%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 1
+
+label-empty = %name%
+label-empty-foreground = ${colors.disabled}
+label-empty-padding = 1
+
+; [module/xwindow]
+; type = internal/xwindow
+; label = [%title:0:20:...%]
+; format-padding = 1px
+
+[module/wintitle]
+type = custom/script
+; exec = python3 /home/computer/coding/i3-scripts/scripts/title.py
+
+tail = true
+label = %output%
+format-padding = 1px
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume-prefix-foreground = ${colors.foreground}
+format-volume = ""
+
+format-volume-background = ${colors.background}
+format-volume-foreground = ${colors.background}
+format-volume-padding = 1px
+
+label-muted = "󰸈"
+label-foreground = ${colors.disabled}
+
+format-muted-background = ${colors.background}
+format-muted-foreground = ${colors.background}
+format-muted-padding = 1px
+
+[module/memory]
+type = internal/memory
+interval = 2
+label = "󰍛 %percentage_used:2%%"
+format-padding = 1px
+format-background = ${colors.background}
+format-foreground = ${colors.foreground}
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+label = "󰈐 %percentage:2%%"
+format-padding = 1px
+format-background = ${colors.background}
+format-foreground = ${colors.foreground}
+
+[module/battery]
+type = internal/battery
+full-at = 99
+low-at = 5
+battery = BAT0
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+format-discharging = "<ramp-capacity>  <label-discharging>"
+format-charging = "<ramp-capacity>  <label-charging>+"
+format-full = "<ramp-capacity>  <label-full>"
+
+poll-interval = 5
+format-discharging-padding = 1px
+format-charging-padding = 1px
+format-full-padding = 1px
+
+format-discharging-background = ${colors.background}
+format-charging-background = ${colors.background}
+format-full-background = ${colors.background}
+
+format-discharging-foreground = ${colors.foreground}
+format-charging-foreground = ${colors.foreground}
+format-full-foreground = ${colors.foreground}
+
+[module/date]
+type = internal/date
+interval = 60
+
+; date = %H:%M
+; date = 󰥔 %H:%M : %d/%m/%Y
+date =  %d/%m/%Y
+;
+label = %date%
+format-padding = 1px
+label-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+
+[module/time]
+type = internal/date
+
+interval = 10
+
+time = 󰥔 %H:%M
+label = %time%
+label-foreground = ${colors.foreground}
+format-padding = 1px
+format-background = ${colors.background}
+
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+
+format-radius = 10
+format-prefix = " "
+format-foreground = ${colors.foreground}
+format-padding = 1px
+label-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+use-actual-brightness = true
+enable-scroll = true
+
+[settings]
+screenchange-reload = true
+pseudo-transparency = false
+
