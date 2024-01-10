@@ -32,21 +32,6 @@ set $mod Mod4
 font pango:JetBrains Mono Regular 15
 title_align center
 
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
-
-# Start XDG autostart .desktop files using dex. See also
-# https://wiki.archlinux.org/index.php/XDG_Autostart
-exec --no-startup-id dex --autostart --environment i3
-
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
-
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
@@ -65,35 +50,17 @@ bindsym $mod+Shift+q kill
 
 bindsym $mod+d exec --no-startup-id /usr/bin/rofi -show run
 
-# change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
-
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
-
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
-
-# split in horizontal orientation
-bindsym $mod+h split h
-
-# split in vertical orientation
-bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -162,38 +129,9 @@ for_window [class="discord"] move to workspace $ws5
 for_window [class="Nemo"] floating toggle
 for_window [class="Eog"] floating toggle
 
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+bindsym $mod+Shift+comma resize shrink width 5 px or 5 ppt
+bindsym $mod+Shift+period resize grow width 3 px or 3 ppt
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym semicolon resize grow width 5 px or 5 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 5 px or 5 ppt
-        bindsym Down resize grow height 5 px or 5 ppt
-        bindsym Up resize shrink height 5 px or 5 ppt
-        bindsym Right resize grow width 5 px or 5 ppt
-
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
-}
-
-bindsym $mod+r mode "resize"
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-# bar {
-#         status_command i3status -c /home/$USER/.config/i3status/i3status.conf
-# }
 for_window [class=".*"] border pixel 2
 default_border pixel 3
 default_floating_border pixel 3
@@ -202,13 +140,9 @@ hide_edge_borders none
 smart_borders active
 focus_follows_mouse yes
 
-# set $bgcolour #1a1f46
-# set $borderactivecolour #ad8ee6
-# set $textcolour #a9b1d6
-
-set_from_resource $bgcolour i3wm.color0 #1a1f46
-set_from_resource $borderactivecolour i3wm.color4 #ad8ee6
-set_from_resource $textcolour i3wm.foreground #a9b1d6
+set_from_resource $bgcolour i3wm.color0 #0a0a0a
+set_from_resource $borderactivecolour i3wm.color4 #0a0a0a
+set_from_resource $textcolour i3wm.foreground #ffffff
 
 # class, border, background, text, indicator, border_actual
 client.focused $borderactivecolour $bgcolour $textcolour $borderactivecolour $borderactivecolour
@@ -259,9 +193,9 @@ set $volumestep 5
 #set $alsacard 1
 
 # append "-c $alsacard" without quotes to override default card
-bindsym XF86AudioRaiseVolume exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig up $volumestep
-bindsym XF86AudioLowerVolume exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig down $volumestep
-bindsym XF86AudioMute        exec --no-startup-id "pactl set-sink-mute 0 toggle"
+# bindsym XF86AudioRaiseVolume exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig up $volumestep
+# bindsym XF86AudioLowerVolume exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig down $volumestep
+# bindsym XF86AudioMute        exec --no-startup-id "pactl set-sink-mute 0 toggle"
 
 bindsym $mod+g exec --no-startup-id firefox
 bindsym $mod+Shift+p exec --no-startup-id "flameshot gui"
