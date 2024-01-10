@@ -1,2 +1,21 @@
-/* @theme "/usr/share/rofi/themes/purple.rasi" */
-@theme "~/.config/rofi/mytheme.rasi"
+configuration {
+    font: "JetBrains Mono Nerd Font 12";
+}
+
+@theme "~/.cache/wal/colors-rofi-dark.rasi"
+
+element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+#window {
+    border: 2;
+    border-color: @active-background;
+    border-radius: 5;
+    padding: 5;
+}
+
+#element.selected.normal {
+    text-color: @background;
+}
