@@ -1,0 +1,8 @@
+discord
+flameshot
+light
+polybar
+dunst
+alacritty
+pywal
+feh

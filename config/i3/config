@@ -10,28 +10,27 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 # Display resolution
-exec_always --no-startup-id xrandr --output LVDS-1 --mode 1280x800
-exec_always --no-startup-id picom -b --experimental-backends
+# exec_always --no-startup-id xrandr --output LVDS-1 --mode 1280x800
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id i3-autotiling
 
-exec_always --no-startup-id xinput set-prop bcm5974 327 1 0 0
-exec_always --no-startup-id xinput set-prop bcm5974 322 1
+exec_always --no-startup-id xinput set-prop bcm5974 "libinput Scroll Method Enabled" 1 0 0
+exec_always --no-startup-id xinput set-prop bcm5974 "libinput Natural Scrolling Enabled" 1
 # exec_always --no-startup-id brightnessctl set 20%
 exec_always --no-startup-id quickbrightness
+exec_always --no-startup-id wal -R
 
 # Wallpaper
-exec_always --no-startup-id feh --bg-fill ~/images/celeste_mountain.png
-# exec_always --no-startup-id /usr/lib/policykit-1/polkit-agent-helper-1 &
 exec_always --no-startup-id dunst
 exec_always --no-startup-id lxpolkit
-
 
 # Super key
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:JetBrains Mono Regular 10
+font pango:JetBrains Mono Regular 15
+title_align center
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -64,14 +63,7 @@ bindsym $mod+Return exec --no-startup-id alacritty
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
-# bindsym $mod+d exec --no-startup-id /usr/local/bin/searcher-pygame
 bindsym $mod+d exec --no-startup-id /usr/bin/rofi -show run
-# A more modern dmenu replacement is rofi:
-# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
-# There also is i3-dmenu-desktop which only displays applications shipping a
-# .desktop file. It is a wrapper around dmenu, so you need that installed.
-# bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left
@@ -107,15 +99,14 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+# bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 # bindsym $mod+a focus parent
@@ -165,9 +156,11 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec i3-msg exit
+bindsym $mod+Control+Shift+e exec i3-msg exit
 
 for_window [class="discord"] move to workspace $ws5
+for_window [class="Nemo"] floating toggle
+for_window [class="Eog"] floating toggle
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -201,20 +194,31 @@ bindsym $mod+r mode "resize"
 # bar {
 #         status_command i3status -c /home/$USER/.config/i3status/i3status.conf
 # }
+for_window [class=".*"] border pixel 2
+default_border pixel 3
+default_floating_border pixel 3
+new_window pixel 3
+hide_edge_borders none
+smart_borders active
+focus_follows_mouse yes
 
+# set $bgcolour #1a1f46
+# set $borderactivecolour #ad8ee6
+# set $textcolour #a9b1d6
 
-set $bgcolour #0a0b16
-set $borderactivecolour #ad8ee6
-set $textcolour #ffffff
+set_from_resource $bgcolour i3wm.color0 #1a1f46
+set_from_resource $borderactivecolour i3wm.color4 #ad8ee6
+set_from_resource $textcolour i3wm.foreground #a9b1d6
 
-# class, border, background, text, indicator
-client.focused $borderactivecolour $bgcolour $text $bgcolour
-client.unfocused $bgcolour $bgcolour $text $bgcolour
-client.focused_inactive $borderactivecolour $bgcolour $text $bgcolour
+# class, border, background, text, indicator, border_actual
+client.focused $borderactivecolour $bgcolour $textcolour $borderactivecolour $borderactivecolour
+client.unfocused $bgcolour $bgcolour $textcolour $bgcolour $bgcolour
+# client.unfocused $bgcolour $bgcolour $textcolour $bgcolour $bgcolour
+client.focused_inactive $borderactivecolour $bgcolour $textcolour $bgcolour $bgcolour
+client.urgent $borderactivecolour $bgcolour $textcolour $bgcolour $bgcolour
+client.placeholder $borderactivecolour $bgcolour $textcolour $bgcolour $bgcolour
 
-new_window 1pixel
-default_border 1pixel
-default_floating_border 1pixel
+# new_window 1pixel
 
 # bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
 # bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
@@ -223,7 +227,8 @@ default_floating_border 1pixel
 # gap config
 gaps inner 5px
 gaps outer 5px
-gaps top 55px
+gaps top 45px
+# gaps bottom 45px
 
 # Review the lines below and append to ~/.config/i3/config
 
@@ -260,4 +265,3 @@ bindsym XF86AudioMute        exec --no-startup-id "pactl set-sink-mute 0 toggle"
 
 bindsym $mod+g exec --no-startup-id firefox
 bindsym $mod+Shift+p exec --no-startup-id "flameshot gui"
-

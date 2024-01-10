@@ -44,11 +44,11 @@ set wildmode=longest,list
 set background=dark
 syntax enable
 set backspace=indent,eol,start
-" colorscheme wal
+colorscheme wal
 set fillchars+=vert:│
 
-set termguicolors
-colorscheme tokyonight
+" set termguicolors
+" colorscheme tokyonight
 let g:tokyonight_style = 'night' " available: night, storm
 let g:tokyonight_enable_italic = 1
 
@@ -109,4 +109,3 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
-
