@@ -11,11 +11,13 @@
 
 # Display resolution
 # exec_always --no-startup-id xrandr --output LVDS-1 --mode 1280x800
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-exec_always --no-startup-id i3-autotiling
+exec_always --no-startup-id sleep 0.5 && $HOME/.config/polybar/split/launch.sh
+# exec_always --no-startup-id sleep 1 && $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id autotiling
+exec_always --no-startup-id picom
 
-exec_always --no-startup-id xinput set-prop bcm5974 "libinput Scroll Method Enabled" 1 0 0
-exec_always --no-startup-id xinput set-prop bcm5974 "libinput Natural Scrolling Enabled" 1
+# exec_always --no-startup-id xinput set-prop bcm5974 "libinput Scroll Method Enabled" 1 0 0
+# exec_always --no-startup-id xinput set-prop bcm5974 "libinput Natural Scrolling Enabled" 1
 # exec_always --no-startup-id brightnessctl set 20%
 exec_always --no-startup-id quickbrightness
 exec_always --no-startup-id wal -R
@@ -35,9 +37,6 @@ title_align center
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -67,19 +66,13 @@ bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+t layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+y layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-# bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-# bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+Tab focus mode_toggle
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -131,6 +124,7 @@ for_window [class="Eog"] floating toggle
 
 bindsym $mod+Shift+comma resize shrink width 5 px or 5 ppt
 bindsym $mod+Shift+period resize grow width 3 px or 3 ppt
+bindsym $mod+Shift+h exec --no-startup-id $HOME/.config/i3/scripts/polybar-toggle.sh
 
 for_window [class=".*"] border pixel 2
 default_border pixel 3
@@ -140,62 +134,45 @@ hide_edge_borders none
 smart_borders active
 focus_follows_mouse yes
 
-set_from_resource $bgcolour i3wm.color0 #0a0a0a
-set_from_resource $borderactivecolour i3wm.color4 #0a0a0a
+set_from_resource $bgcolour i3wm.background #0a0a0a
+set_from_resource $borderactivecolour i3wm.background #0a0a0a
+set_from_resource $bgaltcolour i3wm.color1 #0a0a0a
 set_from_resource $textcolour i3wm.foreground #ffffff
 
 # class, border, background, text, indicator, border_actual
-client.focused $borderactivecolour $bgcolour $textcolour $borderactivecolour $borderactivecolour
-client.unfocused $bgcolour $bgcolour $textcolour $bgcolour $bgcolour
+client.focused $borderactivecolour $bgcolour $textcolour $bgaltcolour $borderactivecolour
+client.unfocused $bgcolour $bgcolour $textcolour $bgaltcolour $bgcolour
 # client.unfocused $bgcolour $bgcolour $textcolour $bgcolour $bgcolour
-client.focused_inactive $borderactivecolour $bgcolour $textcolour $bgcolour $bgcolour
+client.focused_inactive $borderactivecolour $bgcolour $textcolour $bgaltcolour $bgcolour
 client.urgent $borderactivecolour $bgcolour $textcolour $bgcolour $bgcolour
 client.placeholder $borderactivecolour $bgcolour $textcolour $bgcolour $bgcolour
 
-# new_window 1pixel
+bindsym F1 exec--no-startup-id brightnessctl -q set 2%-
+bindsym F2 exec--no-startup-id brightnessctl -q set 2%+
 
-# bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
-# bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
-# bindsym XF86AudioMute exec amixer -q set Master toggle
+bindsym F5 exec --no-startup-id brightnessctl -q --device=smc::kbd_backlight set 5%-
+bindsym F6 exec --no-startup-id brightnessctl -q --device=smc::kbd_backlight set +5%
+
+bindsym F11 exec --no-startup-id pamixer --unmute && pactl set-sink-volume @DEFAULT_SINK@ -5% && pamixer --set-limit 100
+bindsym F12 exec --no-startup-id pamixer --unmute && pactl set-sink-volume @DEFAULT_SINK@ +5% && pamixer --set-limit 100
+bindsym F10 exec --no-startup-id $HOME/.config/i3/scripts/mute-toggle.sh
+
+# media keys
+# bindsym F7 exec back
+# bindsym F8 exec back
+# bindsym F9 exec back
 
 # gap config
 gaps inner 5px
 gaps outer 5px
-gaps top 45px
+gaps top 50px
 # gaps bottom 45px
-
-# Review the lines below and append to ~/.config/i3/config
-
-## Volume control
-
-# Path to volume control, without trailing slash
-set $volumepath ~/source-repos/i3-volume
-
-# Command for the status line
-#   ie: i3blocks, i3status
-set $statuscmd i3status
-
-# Signal used to update the status line
-#   i3blocks uses SIGRTMIN+10 by default
-#   i3status uses SIGUSR1 by default
-set $statussig SIGUSR1
-
-# Amount to increase/decrease volume as a percentage
-set $volumestep 5
-
-# alsa-utils settings
-#
-# To configure a default card, see https://www.alsa-project.org/main/index.php/Asoundrc
-#
-# Card number to control.
-#   If not specified, i3-volume will let `amixer` use a default.
-#   List cards: aplay -l
-#set $alsacard 1
 
 # append "-c $alsacard" without quotes to override default card
 # bindsym XF86AudioRaiseVolume exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig up $volumestep
 # bindsym XF86AudioLowerVolume exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig down $volumestep
 # bindsym XF86AudioMute        exec --no-startup-id "pactl set-sink-mute 0 toggle"
 
-bindsym $mod+g exec --no-startup-id firefox
+bindsym $mod+g exec firefox
+bindsym $mod+e exec Thunar
 bindsym $mod+Shift+p exec --no-startup-id "flameshot gui"
