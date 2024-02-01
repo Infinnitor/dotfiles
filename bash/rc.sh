@@ -1,4 +1,4 @@
-export PATH="/home/computer/.local/bin/:$PATH"
+export PATH="$PATH:/home/computer/.local/bin/"
 export TERMINAL=alacritty
 export EDITOR="vim"
 

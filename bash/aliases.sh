@@ -1,5 +1,10 @@
 alias q="exit"
 
+alias ls="lsd"
+alias ll="lsd -lah"
+alias l="lsd -1A"
+alias tree="lsd --tree"
+
 alias vimrc="vim ~/.vimrc"
 alias i3config="vim ~/.config/i3/config"
 alias polybarconfig="vim ~/.config/polybar/config.ini"
