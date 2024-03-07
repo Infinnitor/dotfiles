@@ -16,6 +16,7 @@ Plug 'honza/vim-snippets'
 Plug 'jwalton512/vim-blade'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'dylanaraps/wal.vim'
+Plug 'prettier/vim-prettier'
 call plug#end()
 
 set encoding=UTF-8
@@ -29,10 +30,11 @@ set tabstop=4
 set cinoptions=m1
 
 let g:rust_recommended_style = 0
-let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 0
 let g:python_recommended_style = 0
 let g:python_highlight_string_format = 1
 let g:python_highlight_builtin_objs  = 1
+let g:markdown_recommended_style = 0
 
 let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 let g:syntastic_python_checkers = ["pyflakes"]
@@ -51,15 +53,19 @@ set fillchars+=vert:│
 " colorscheme tokyonight
 let g:tokyonight_style = 'night' " available: night, storm
 let g:tokyonight_enable_italic = 1
+let g:prettier#exec_cmd_async = 1
+let g:prettier#config#use_tabs = 'true'
 
 let mapleader = " "
 nmap <leader>p :NERDTreeToggle<CR>
 nmap <leader>a :tabp<CR>
 nmap <leader>d :tabn<CR>
 nmap <leader>/ :Commentary<CR>
-nmap <leader>w 10k
-nmap <leader>s 10j
-" nmap <leader>f :CtrlP<CR>
+nmap <Leader>fm <Plug>(Prettier)
+
+autocmd FileType rust nnoremap <leader>fm :RustFmt<CR>
+autocmd FileType python nnoremap <leader>fm :0,$!yapf<Cr><C-o>
+autocmd FileType html,css,javascript nmap <leader>fm <Plug>(Prettier)
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:NERDTreeWinPos = "right"
