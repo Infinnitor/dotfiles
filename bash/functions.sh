@@ -15,3 +15,12 @@ print-colours() {
 wget-image() {
 	wget -q -O "$@"
 }
+
+image() {
+	feh "$@" --scale-down -g 1200x720  --class floating
+}
+
+cb() {
+	xsel -i
+	xsel -o
+}
