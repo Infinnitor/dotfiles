@@ -1,3 +1,6 @@
+filetype off
+set nocompatible
+
 call plug#begin()
 Plug 'csexton/trailertrash.vim'
 Plug 'preservim/nerdtree'
@@ -16,6 +19,7 @@ Plug 'honza/vim-snippets'
 Plug 'jwalton512/vim-blade'
 Plug 'dylanaraps/wal.vim'
 Plug 'prettier/vim-prettier'
+Plug 'vim-python/python-syntax'
 call plug#end()
 
 set encoding=UTF-8
@@ -28,11 +32,17 @@ set shiftwidth=4
 set tabstop=4
 set cinoptions=m1
 
+filetype plugin indent on
+syntax on
+
 let g:rust_recommended_style = 0
 let g:rustfmt_autosave = 0
+
 let g:python_recommended_style = 0
 let g:python_highlight_string_format = 1
 let g:python_highlight_builtin_objs  = 1
+let g:python_highlight_all = 1
+
 let g:markdown_recommended_style = 0
 
 let g:syntastic_php_checkers = ["php", "phpcs", "phpmd"]
@@ -43,9 +53,7 @@ let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive
 set wildmode=longest,list
 
 set background=dark
-syntax enable
 set backspace=indent,eol,start
-" colorscheme wal
 set fillchars+=vert:│
 
 set termguicolors
@@ -56,10 +64,12 @@ let g:prettier#exec_cmd_async = 1
 let g:prettier#config#use_tabs = 'true'
 
 let mapleader = " "
-nmap <leader>p :NERDTreeToggle<CR>
+nmap <leader>p :NERDTreeMirror<CR>:NERDTreeToggle<CR>
 nmap <leader>a :tabp<CR>
 nmap <leader>d :tabn<CR>
 nmap <leader>/ :Commentary<CR>
+nmap <leader>j 15j
+nmap <leader>k 15k
 
 nmap <C-j> 15j \| zz
 nmap <C-k> 15k \| zz
@@ -72,22 +82,22 @@ endfunction
 nmap <leader>t :call NewTree()<CR>
 nmap <leader>r :e!<CR>
 
+autocmd FileType javascript,html,css nnoremap <leader>fm :Prettier<CR>
 autocmd FileType rust nnoremap <leader>fm :RustFmt<CR>
 autocmd FileType python nnoremap <leader>fm :0,$!yapf<Cr><C-o>
-autocmd FileType html,css,javascript nmap <leader>fm <Plug>(Prettier)
 
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:NERDTreeWinPos = "right"
-let g:NERDTreeWinSize = 50
+" let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinSize = 35
 
 autocmd BufWritePre * :TrailerTrim
-set whichwrap+=<,>,[,]
 
 command W update
+command Vimrc :so ~/.vimrc
 command Linewrap :set wrap linebreak
 command Popout :execute 'silent :!alacritty --working-directory %:p:h --command bash --init-file <(echo ". \"$HOME/.bashrc\"; vim %:p") &' | redraw! | q
 
-set number!
+set number
 set nowrap
 set noswapfile
 set clipboard=unnamedplus
@@ -123,3 +133,5 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
+
+map <S-k> <Nop>
