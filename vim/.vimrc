@@ -71,9 +71,6 @@ nmap <leader>/ :Commentary<CR>
 nmap <leader>j 15j
 nmap <leader>k 15k
 
-nmap <C-j> 15j \| zz
-nmap <C-k> 15k \| zz
-
 function NewTree()
 	tabe .
 	normal! 5G
