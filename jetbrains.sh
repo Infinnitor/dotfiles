@@ -5,6 +5,7 @@ FONT_DL_ZIP="JetBrainsMono.zip"
 INSTALL_DIR="$HOME/.local/share/fonts/"
 
 mkdir -p $FONT_DL_DIR --verbose
+mkdir -p $INSTALL_DIR --verbose
 cd $FONT_DL_DIR
 echo "--------- DOWNLOADING ---------"
 wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip" -O $FONT_DL_ZIP
