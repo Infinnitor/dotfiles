@@ -29,7 +29,21 @@ vim.cmd[[command W update]]
 -- Trim trailing whitespace
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	pattern = { "*" },
-	command = [[%s/\s\+$//e]],
+	callback = function(_)
+		local pos = vim.api.nvim_win_get_cursor(0)
+		vim.cmd[[%s/\s\+$//e]]
+		vim.api.nvim_win_set_cursor(0, pos)
+		vim.cmd[[nohlsearch]]
+	end
+})
+
+-- Trim trailing whitespace
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+	pattern = { "*.md", "*.txt" },
+	callback = function(_)
+		print("hello")
+		vim.cmd[[setlocal wrap spell linebreak]]
+	end
 })
 
 -- lazy.vim boilerplate
@@ -69,7 +83,7 @@ require("lazy").setup({
 			local configs = require("nvim-treesitter.configs")
 
 			configs.setup({
-				ensure_installed = { "c", "rust", "lua", "vim", "vimdoc", "python", "javascript", "html" },
+				ensure_installed = { "gdscript", "c", "rust", "lua", "vim", "vimdoc", "python", "javascript", "html" },
 				sync_install = false,
 				highlight = { enable = true },
 				indent = { enable = true },
@@ -150,7 +164,7 @@ cmp.setup({
 	-- Use vsnip
 	snippet = {
 		expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+			vim.fn["vsnip#anonymous"](args.body)
 		end,
 	},
 
@@ -166,8 +180,7 @@ cmp.setup({
 		},
 		{ name = "vsnip" },
 		{ name = "path" }
-		}
-	)
+	})
 })
 
 -- Autocomplete for words in current file
