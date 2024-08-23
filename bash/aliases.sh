@@ -9,6 +9,7 @@ alias bc="bc -l"
 alias xsel="xsel -b"
 
 alias vimrc="vim ~/.vimrc"
+alias nvimrc="nvim ~/.config/nvim/init.lua"
 alias i3config="vim ~/.config/i3/config"
 alias polybarconfig="vim ~/.config/polybar/config.ini"
 alias wal-ccache="vim ~/.cache/wal/colors.json"

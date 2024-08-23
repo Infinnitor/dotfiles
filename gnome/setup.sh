@@ -1,3 +1,4 @@
+for i in {1..9}; do gsettings set "org.gnome.shell.keybindings" "switch-to-application-$i" "[]" ; done
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['<Super>1']"
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-2 "['<Super>2']"
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-3 "['<Super>3']"
