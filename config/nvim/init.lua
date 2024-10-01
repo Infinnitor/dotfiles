@@ -10,6 +10,7 @@ vim.opt.cinoptions = "m1"
 
 -- Visual options
 vim.opt.termguicolors = true
+
 vim.opt.number = true
 vim.opt.wrap = false
 
@@ -21,6 +22,20 @@ vim.keymap.set("n", "<Leader>t", "<cmd>tabe<CR><cmd>Neotree position=current<CR>
 vim.keymap.set("n", "<Leader>p", "<cmd>Neotree toggle position=left<CR>")
 vim.keymap.set("n", "<Leader>/", "<cmd>Commentary<CR>")
 vim.keymap.set("n", "<Leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap=true, silent=true })
+
+vim.keymap.set("n", "<Leader>fm", function(_)
+	vim.cmd[[w]]
+	if vim.bo.filetype == "python" then
+		print("Running black")
+		vim.cmd[[silent !black %]]
+	elseif vim.bo.filetype == "rust" then
+		print("Running rustfmt")
+		vim.cmd[[silent !rustfmt %]]
+	elseif vim.bo.filetype == "javascript" or vim.bo.filetype == "html" or vim.bo.filetype == "css" then
+		print("Running prettier")
+		vim.cmd[[silent !prettier % --write --use-tabs]]
+	end
+end)
 
 -- Custom commands
 vim.cmd[[command W update]]
@@ -41,7 +56,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 	pattern = { "*.md", "*.txt" },
 	callback = function(_)
-		print("hello")
 		vim.cmd[[setlocal wrap spell linebreak]]
 	end
 })
@@ -132,6 +146,9 @@ require("tokyonight").setup({
 
 -- Set colorscheme
 vim.cmd[[colorscheme tokyonight]]
+vim.cmd[[hi Search guibg=#283457]]
+vim.cmd[[hi CurSearch guibg=#283457]]
+vim.cmd[[hi IncSearch guibg=#384467 guifg=white]]
 
 -- Setup python LSP
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -151,14 +168,16 @@ require("lspconfig").pylsp.setup{
 	capabilities = capabilities
 }
 
+require("lspconfig").gdscript.setup{capabilities=capabilities}
+
 -- Setup completion
 local cmp = require("cmp")
 cmp.setup({
 	-- Menu navigation bindings
 	mapping = cmp.mapping.preset.insert({
-		["<Tab>"] = cmp.mapping.confirm({ select = true }),
-		-- ["<Tab>"] = cmp.mapping.select_next_item(),
-		["<S-Tab>"] = cmp.mapping.select_next_item(),
+		["<CR>"] = cmp.mapping.confirm({ select = true }),
+		["<Tab>"] = cmp.mapping.select_next_item(),
+		["<S-Tab>"] = cmp.mapping.select_prev_item(),
 	}),
 
 	-- Use vsnip
