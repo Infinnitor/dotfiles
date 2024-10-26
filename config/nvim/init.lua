@@ -16,9 +16,15 @@ vim.opt.wrap = false
 
 -- Mappings
 vim.g.mapleader = " "
+
+-- Tab navigation
 vim.keymap.set("n", "<Leader>a", "<cmd>tabp<CR>")
 vim.keymap.set("n", "<Leader>d", "<cmd>tabn<CR>")
 vim.keymap.set("n", "<Leader>t", "<cmd>tabe<CR><cmd>Neotree position=current<CR>")
+for i=1,9 do
+	vim.keymap.set("n", "<Leader>"..i, i.."gt")
+end
+
 vim.keymap.set("n", "<Leader>p", "<cmd>Neotree toggle position=left<CR>")
 vim.keymap.set("n", "<Leader>/", "<cmd>Commentary<CR>")
 vim.keymap.set("n", "<Leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap=true, silent=true })
@@ -89,6 +95,11 @@ require("lazy").setup({
 
 	"smolck/command-completion.nvim",
 
+	{
+		"nanozuki/tabby.nvim",
+		dependencies = "nvim-tree/nvim-web-devicons",
+	},
+
 	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -97,7 +108,7 @@ require("lazy").setup({
 			local configs = require("nvim-treesitter.configs")
 
 			configs.setup({
-				ensure_installed = { "gdscript", "c", "rust", "lua", "vim", "vimdoc", "python", "javascript", "html" },
+				ensure_installed = { "gdscript", "c_sharp", "c", "rust", "lua", "vim", "vimdoc", "python", "javascript", "html" },
 				sync_install = false,
 				highlight = { enable = true },
 				indent = { enable = true },
@@ -130,7 +141,24 @@ require("lazy").setup({
 			"rafamadriz/friendly-snippets"
 		}
 	},
+
+	{
+		"fnune/recall.nvim",
+		config = function()
+			local recall = require("recall")
+
+			recall.setup({
+				sign = ""
+			})
+
+			vim.keymap.set("n", "<leader>rr", recall.toggle, { noremap = true, silent = true })
+			vim.keymap.set("n", "<leader>rj", recall.goto_next, { noremap = true, silent = true })
+			vim.keymap.set("n", "<leader>rk", recall.goto_prev, { noremap = true, silent = true })
+			vim.keymap.set("n", "<leader>rc", recall.clear, { noremap = true, silent = true })
+		end
+	},
 })
+
 
 -- Setup theme
 require("tokyonight").setup({
@@ -169,6 +197,56 @@ require("lspconfig").pylsp.setup{
 }
 
 require("lspconfig").gdscript.setup{capabilities=capabilities}
+
+local theme = {
+	fill = 'TabLineFill',
+	head = 'TabLine',
+	current_tab = 'TabLineSel',
+	tab = 'TabLine',
+	win = 'TabLine',
+	tail = 'TabLine',
+}
+
+require("tabby").setup({
+	line = function(line)
+		return {
+			{
+				{ "  ", hl = theme.head },
+				line.sep("", theme.head, theme.fill),
+			},
+			line.tabs().foreach(function(tab)
+				local hl = tab.is_current() and theme.current_tab or theme.tab
+				local tabname = tab.name()
+				local name = string.sub(tabname,1,string.len("neo-tree")) == "neo-tree" and "tree" or tab.name()
+				return {
+					line.sep("", hl, theme.fill),
+					tab.is_current() and "" or "󰆣",
+					tab.number(),
+					name,
+					line.sep("", hl, theme.fill),
+					hl = hl,
+					margin = " ",
+				}
+			end),
+			line.spacer(),
+			line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+				return {
+					line.sep("", theme.win, theme.fill),
+					win.is_current() and "" or "",
+					win.buf_name(),
+					line.sep("", theme.win, theme.fill),
+					hl = theme.win,
+					margin = " ",
+				}
+			end),
+			{
+				line.sep("", theme.tail, theme.fill),
+				{ "  ", hl = theme.tail },
+			},
+			hl = theme.fill,
+		}
+	end
+})
 
 -- Setup completion
 local cmp = require("cmp")
@@ -231,3 +309,5 @@ require("neo-tree").setup({
 	hide_dotfiles = false,
 	hide_gitignored = true
 })
+
+vim.cmd[[tab all]]
