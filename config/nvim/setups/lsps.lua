@@ -18,3 +18,17 @@ require("lspconfig").pylsp.setup{
 
 -- Setup gdscript lsp
 require("lspconfig").gdscript.setup{capabilities=capabilities}
+
+-- Setup rust analyzer
+require("lspconfig").rust_analyzer.setup{
+	settings = {
+	  ['rust-analyzer'] = {
+			completion = {
+				autoimport = {
+					enable = false
+				}
+			}
+		}
+	},
+	capabilities=capabilities
+}

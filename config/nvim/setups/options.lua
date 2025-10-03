@@ -16,3 +16,5 @@ vim.opt.wrap = false
 
 vim.o.showtabline = 2
 vim.o.scrolloff = 5
+
+vim.o.swapfile = false

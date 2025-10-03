@@ -20,7 +20,6 @@ require("lazy").setup({
 	"neovim/nvim-lspconfig",
 	"smolck/command-completion.nvim",
 	"fnune/recall.nvim",
-	"Shatur/neovim-session-manager",
 
 	{
 		"nanozuki/tabby.nvim",
@@ -42,6 +41,12 @@ require("lazy").setup({
 			})
 		end
 	},
+
+	-- Telescope
+	{
+		'nvim-telescope/telescope.nvim', tag = '0.1.8',
+		dependencies = { 'nvim-lua/plenary.nvim' }
+    },
 
 	-- Neotree (file browser)
 	{

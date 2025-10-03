@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cp config/* ~/.config/ -r --verbose
+# cp config/* ~/.config/ -r --verbose
 
 cp vim/.vim ~/ -r --verbose
 cp vim/.vimrc ~/ --verbose

@@ -1,3 +1,4 @@
+require("nvim-highlight-colors").setup()
 
 -- Setup completion
 local cmp = require("cmp")
@@ -53,8 +54,16 @@ require("neo-tree").setup({
 	window = {
 		position = "current"
 	},
-	hide_dotfiles = false,
-	hide_gitignored = true
+	filesystem = {
+		filtered_items = {
+			hide_dotfiles = false,
+			hide_gitignored = true,
+			hide_by_pattern = {
+				"*.gd.uid"
+			}
+		}
+	}
+
 })
 
 local recall = require("recall")
