@@ -9,7 +9,7 @@ vim.opt.tabstop = 4
 vim.opt.cinoptions = "m1"
 
 -- Visual options
-vim.opt.termguicolors = true
+vim.opt.termguicolors = false
 
 vim.opt.number = true
 vim.opt.wrap = false

@@ -1,5 +1,3 @@
-require("nvim-highlight-colors").setup()
-
 -- Setup completion
 local cmp = require("cmp")
 cmp.setup({
@@ -49,28 +47,3 @@ cmp.setup.cmdline(":", {
 	}),
 	matching = { disallow_symbol_nonprefix_matching = false }
 })
-
-require("neo-tree").setup({
-	window = {
-		position = "current"
-	},
-	filesystem = {
-		filtered_items = {
-			hide_dotfiles = false,
-			hide_gitignored = true,
-			hide_by_pattern = {
-				"*.gd.uid"
-			}
-		}
-	}
-})
-
-local recall = require("recall")
-recall.setup({
-	sign = ""
-})
-
-vim.keymap.set("n", "<leader>rr", recall.toggle, { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>rj", recall.goto_next, { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>rk", recall.goto_prev, { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>rc", recall.clear, { noremap = true, silent = true })
