@@ -15,8 +15,21 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
 -- Set spellcheck and word wrap for text and markdown files
 vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
-	pattern = { "*.md", "*.txt" },
+	pattern = { "*.md", ".txt" },
 	callback = function(_)
 		vim.cmd[[setlocal wrap spell linebreak]]
+	end
+})
+
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+	pattern = { "*" },
+	callback = function(_)
+		local buf = vim.api.nvim_buf_get_name(0)
+		if vim.fn.isdirectory(buf) ~= 0 then
+			vim.cmd[[bdelete]]
+			vim.fn.chdir(buf)
+			require("telescope.builtin").find_files()
+		end
 	end
 })

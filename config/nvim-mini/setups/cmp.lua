@@ -5,8 +5,6 @@ cmp.setup({
 
 	-- Menu navigation bindings
 	mapping = cmp.mapping.preset.insert({
-		["<Esc>"] = cmp.mapping.abort(),
-
 		["<CR>"] = function(fallback)
 			if cmp.visible() then
 				cmp.confirm({select = false}, function()
@@ -45,13 +43,13 @@ cmp.setup({
 	-- Sources to use for completion
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
-		-- { name = "buffer",
-		-- 	option = {
-		-- 		get_bufnrs = function()
-		-- 			return vim.api.nvim_list_bufs()
-		-- 		end
-		-- 	}
-		-- },
+		{ name = "buffer",
+			option = {
+				get_bufnrs = function()
+					return vim.api.nvim_list_bufs()
+				end
+			}
+		},
 		{ name = "vsnip" },
 	})
 })

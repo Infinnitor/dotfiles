@@ -1,4 +1,4 @@
--- Mappings
+--nil Mappings
 vim.g.mapleader = " "
 
 vim.keymap.set("n", "gh", "_")
@@ -22,4 +22,29 @@ vim.keymap.set("n", "<Leader>fm", function(_)
 	vim.cmd[[w]]
 	vim.lsp.buf.format()
 	vim.cmd[[w]]
+end)
+
+
+function zellij_open_file_in_pane(path, direction)
+	local diropt = direction == nil and "" or "--direction " .. direction
+	local command = "silent !zellij action new-pane " .. diropt .. " -- nvim " .. path
+	vim.cmd(command)
+end
+
+
+vim.keymap.set("n", "<Leader>zz", function(_)
+	zellij_open_file_in_pane(vim.api.nvim_buf_get_name(0), nil)
+	vim.cmd[[q]]
+end)
+
+vim.keymap.set("n", "<Leader>zf", function(_)
+	zellij_open_file_in_pane(".", nil)
+end)
+
+vim.keymap.set("n", "<Leader>zv", function(_)
+	zellij_open_file_in_pane(vim.api.nvim_buf_get_name(0), "right")
+end)
+
+vim.keymap.set("n", "<Leader>zs", function(_)
+	zellij_open_file_in_pane(vim.api.nvim_buf_get_name(0), "down")
 end)

@@ -17,6 +17,8 @@ require("lazy").setup({
 	"folke/tokyonight.nvim",
 	"neovim/nvim-lspconfig",
 
+	"brenoprata10/nvim-highlight-colors",
+
 	{ "nvim-mini/mini.comment", version = false },
 	{ "nvim-mini/mini.surround", version = false },
 	{ "nvim-mini/mini.pairs", version = false },
@@ -30,7 +32,7 @@ require("lazy").setup({
 			local configs = require("nvim-treesitter.configs")
 
 			configs.setup({
-				ensure_installed = { "gdscript", "c", "rust", "lua", "vim", "vimdoc", "python", "javascript", "html", "css", "go", "toml" },
+				ensure_installed = { "gdscript", "cpp", "c", "rust", "lua", "vim", "vimdoc", "python", "javascript", "html", "css", "go", "toml" },
 				sync_install = false,
 				highlight = { enable = true },
 				indent = { enable = true },
@@ -64,3 +66,19 @@ require("lazy").setup({
 require("mini.comment").setup()
 require("mini.surround").setup()
 require("mini.pairs").setup()
+
+require("telescope").setup{
+	defaults = {
+        borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+		-- selection_strategy = "follow"
+
+		mappings = {
+			i = {
+				["<Tab>"] = "move_selection_previous",
+				["<S-Tab>"] = "move_selection_next"
+			}
+		}
+	}
+}
+
+require("nvim-highlight-colors").setup()
