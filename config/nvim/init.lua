@@ -1,7 +1,21 @@
-vim.cmd[[luafile $HOME/.config/nvim/setups/options.lua]]
-vim.cmd[[luafile $HOME/.config/nvim/setups/keymap.lua]]
-vim.cmd[[luafile $HOME/.config/nvim/setups/cmds.lua]]
-vim.cmd[[luafile $HOME/.config/nvim/setups/packages.lua]]
-vim.cmd[[luafile $HOME/.config/nvim/setups/theme.lua]]
-vim.cmd[[luafile $HOME/.config/nvim/setups/pluginscfg.lua]]
-vim.cmd[[luafile $HOME/.config/nvim/setups/lsps.lua]]
+function handle_load(path)
+	ok, err = pcall(vim.cmd, "luafile" .. path)
+	if not ok then
+		vim.notify(":E " .. err .. " error loading config at " .. path)
+	end
+end
+
+paths = {
+	"setups/options.lua",
+	"setups/keymap.lua",
+	"setups/cmds.lua",
+	"setups/packages.lua",
+	"setups/configure.lua",
+	"setups/theme.lua",
+	"setups/cmp.lua",
+	"setups/lsps.lua"
+}
+
+for _, p in pairs(paths) do
+	handle_load("$HOME/.config/nvim/" .. p)
+end

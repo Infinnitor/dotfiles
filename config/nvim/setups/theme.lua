@@ -1,7 +1,7 @@
 -- Setup tokyonight overrides for darker background
 require("tokyonight").setup({
 	terminal_colors = true,
-	style = "night",
+	style = "storm",
 
 	-- Custom colours
 	on_colors = function(colors)
@@ -12,47 +12,51 @@ require("tokyonight").setup({
 
 -- Set colorscheme
 local set_colourscheme = "tokyonight"
--- Check if installed
+-- -- Check if installed
 local is_ok, _ = pcall(vim.cmd, "colorscheme " .. set_colourscheme)
 if not is_ok then
     vim.notify("E: Colorscheme " .. set_colourscheme .. " not found!")
 end
+--
 
--- Set some overrides for search highlighting to make it useable
-vim.cmd[[hi Search guibg=#283457]]
-vim.cmd[[hi CurSearch guibg=#283457]]
-vim.cmd[[hi IncSearch guibg=#384467 guifg=white]]
-
-vim.cmd[[hi NeoTreeNormal guibg=#0a0a0f guifg=white]]
-
--- Tabline config
-local theme = {
-	fill = "TabLineFill",
-	head = "TabLine",
-	current_tab = "TabLineSel",
-	tab = "TabLine",
-	win = "TabLine",
-	tail = "TabLine",
+require("mini.base16").setup{
+	palette = {
+		base00 = "#0a0a0f", -- Background
+		base01 = "#0f0f15", -- Status column / autocomplete background
+		base02 = "#0a0a0f", -- Selection / statusline background / window border
+		base03 = "#444b6a", -- Comments / numbers
+		base04 = "#a9b1d6", -- Statusline text
+		base05 = "#a9b1d6", -- Variables / cmdline
+		base06 = "#ff00ff", -- unknown
+		base07 = "#9ece6a", -- autocomplete
+		base08 = "#f7768e", -- statuscolumn errors, attribute
+		base09 = "#e0af68", -- booleans
+		base0A = "#ff9e64", -- types
+		base0B = "#9ece6a", -- strings
+		base0C = "#ff9e64", -- Enum variants
+		base0D = "#7aa2f7", -- function declarations
+		base0E = "#ad8ee6", -- keywords
+		base0F = "#787c99", -- symbols
+	}
 }
 
-require("tabby").setup({
-	line = function(line)
-		return {
-			line.tabs().foreach(function(tab)
-				local hl = tab.is_current() and theme.current_tab or theme.tab
-				local tabname = tab.name()
-				local name = string.sub(tabname,1,string.len("neo-tree")) == "neo-tree" and "tree" or tab.name()
-				return {
-					line.sep("  ", hl, theme.fill),
-					tab.is_current() and "" or "󰆣",
-					tab.number(),
-					name,
-					line.sep("  ", hl, theme.fill),
-					hl = hl,
-					margin = " ",
-				}
-			end),
-			hl = theme.fill,
-		}
-	end
-})
+vim.cmd[[hi Visual guibg=#25253a]]
+
+vim.cmd[[hi Search guibg=#0f0f15 guifg=#a9b1d6]]
+vim.cmd[[hi CurSearch guibg=#0f0f15 guifg=#a9b1d6]]
+vim.cmd[[hi IncSearch guibg=#0f0f15 guifg=#a9b1d6]]
+
+vim.cmd[[hi SignColumn guibg=#0a0a0f]]
+vim.cmd[[hi LineNr guibg=#0a0a0f]]
+vim.cmd[[hi FoldColumn guibg=#0a0a0f]]
+
+vim.cmd[[hi StatusLine guibg=#0a0a0f guifg=#a9b1d6]]
+vim.cmd[[hi MsgArea guibg=#0a0a0f guifg=#a9b1d6]]
+
+vim.cmd[[hi EndOfBuffer guifg=#0a0a0f]]
+
+-- Snacks
+vim.cmd[[hi SnacksPicker guibg=#0a0a0f]]
+vim.cmd[[hi SnacksPickerListCursorLine guibg=#15151f]]
+vim.cmd[[hi SnacksPickerBorder guifg=#444b6a]]
+vim.cmd[[hi SnacksPickerDir guifg=#a9b1d6]]

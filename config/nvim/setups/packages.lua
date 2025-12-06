@@ -20,13 +20,46 @@ require("lazy").setup({
 	{ "nvim-mini/mini.comment", version = false },
 	{ "nvim-mini/mini.surround", version = false },
 	{ "nvim-mini/mini.pairs", version = false },
-	{ "nvim-mini/mini.trailspace", version = false },
 	{ "nvim-mini/mini.base16", version = false },
+	{ "nvim-mini/mini.icons", version = false },
 
 	{
-		"nanozuki/tabby.nvim",
-		dependencies = "nvim-tree/nvim-web-devicons",
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		---@type snacks.Config
+		opts = {
+			picker = {
+				enabled = true,
+				layout = "telescope",
+				on_show = function(_)
+					vim.cmd[[stopinsert]]
+				end,
+				win = {
+					input = {
+						keys = {
+							["<Tab>"] = { "list_up", mode = { "i", "n" } },
+							["<S-Tab>"] = { "list_down", mode = { "i", "n" } },
+						}
+					}
+				}
+			},
+			explorer = { enabled = true},
+			input = { enabled = true },
+			quickfile = { enabled = true },
+		},
 	},
+
+	-- {
+	-- 	"nvim-neo-tree/neo-tree.nvim",
+	-- 	branch = "v3.x",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		"nvim-tree/nvim-web-devicons",
+	-- 	},
+	-- 	lazy = false,
+	-- },
 
 	-- Treesitter
 	{
@@ -36,7 +69,7 @@ require("lazy").setup({
 			local configs = require("nvim-treesitter.configs")
 
 			configs.setup({
-				ensure_installed = { "gdscript", "c", "rust", "lua", "vim", "vimdoc", "python", "javascript", "html" },
+				ensure_installed = { "gdscript", "cpp", "c", "rust", "lua", "vim", "vimdoc", "python", "javascript", "html", "css", "go", "toml" },
 				sync_install = false,
 				highlight = { enable = true },
 				indent = { enable = true },
@@ -51,17 +84,6 @@ require("lazy").setup({
 		dependencies = { "nvim-lua/plenary.nvim" }
 	},
 
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v3.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
-			"nvim-tree/nvim-web-devicons", -- optional, but recommended
-		},
-		lazy = false, -- neo-tree will lazily load itself
-	},
-
 	-- nvim-cmp (completion)
 	{
 		"hrsh7th/nvim-cmp",
@@ -74,27 +96,6 @@ require("lazy").setup({
 			"hrsh7th/vim-vsnip",
 			"hrsh7th/cmp-cmdline",
 			"rafamadriz/friendly-snippets"
-		}
-	}
-})
-
-require("mini.comment").setup()
-require("mini.surround").setup()
-require("mini.pairs").setup()
-require("mini.trailspace").setup()
-
-
-require("neo-tree").setup({
-	window = {
-		position = "current"
-	},
-	filesystem = {
-		filtered_items = {
-			hide_dotfiles = false,
-			hide_gitignored = true,
-			hide_by_pattern = {
-				"*.gd.uid"
-			}
 		}
 	}
 })

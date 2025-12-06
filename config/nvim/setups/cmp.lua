@@ -1,11 +1,36 @@
 -- Setup completion
 local cmp = require("cmp")
 cmp.setup({
+	preselect = cmp.PreselectMode.None,
+
 	-- Menu navigation bindings
 	mapping = cmp.mapping.preset.insert({
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
-		["<Tab>"] = cmp.mapping.select_next_item(),
-		["<S-Tab>"] = cmp.mapping.select_prev_item(),
+		["<CR>"] = function(fallback)
+			if cmp.visible() then
+				cmp.confirm({select = false}, function()
+					vim.cmd("stopinsert")
+				end)
+			else
+				fallback()
+			end
+		end,
+
+		["<Tab>"] = function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+				cmp.complete()
+			else
+				fallback()
+			end
+		end,
+		["<S-Tab>"] = function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+				cmp.complete()
+			else
+				fallback()
+			end
+		end
 	}),
 
 	-- Use vsnip
@@ -26,7 +51,6 @@ cmp.setup({
 			}
 		},
 		{ name = "vsnip" },
-		{ name = "path" }
 	})
 })
 
