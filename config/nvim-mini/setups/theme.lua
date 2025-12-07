@@ -66,6 +66,9 @@ vim.cmd[[hi IncSearch guibg=#0f0f15 guifg=#a9b1d6]]
 vim.cmd[[hi SignColumn guibg=#0a0a0f]]
 vim.cmd[[hi LineNr guibg=#0a0a0f]]
 vim.cmd[[hi FoldColumn guibg=#0a0a0f]]
+vim.cmd[[hi NonText guibg=#0a0a0f guifg=#0a0a0f]]
+vim.cmd[[hi EndOfBuffer guibg=#0a0a0f guifg=#0a0a0f]]
 
 vim.cmd[[hi StatusLine guibg=#0a0a0f guifg=#a9b1d6]]
 vim.cmd[[hi MsgArea guibg=#0a0a0f guifg=#a9b1d6]]
+

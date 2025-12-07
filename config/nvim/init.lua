@@ -11,6 +11,7 @@ paths = {
 	"setups/cmds.lua",
 	"setups/packages.lua",
 	"setups/configure.lua",
+	"setups/tabline.lua",
 	"setups/theme.lua",
 	"setups/cmp.lua",
 	"setups/lsps.lua"

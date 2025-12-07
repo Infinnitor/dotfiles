@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 })
 
 
-vim.api.nvim_create_autocmd({ "VimEnter" }, {
+vim.api.nvim_create_autocmd({ "VimEnter", }, {
 	pattern = { "*" },
 	callback = function(_)
 		local buf = vim.api.nvim_buf_get_name(0)

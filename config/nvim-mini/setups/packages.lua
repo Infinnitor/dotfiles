@@ -71,7 +71,7 @@ require("telescope").setup{
 	defaults = {
         borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
 		-- selection_strategy = "follow"
-
+		hijack_netrw = true,
 		mappings = {
 			i = {
 				["<Tab>"] = "move_selection_previous",

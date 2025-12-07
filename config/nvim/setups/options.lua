@@ -9,7 +9,6 @@ vim.opt.termguicolors = false
 vim.opt.number = true
 vim.opt.wrap = false
 
-vim.o.showtabline = 0
 vim.o.scrolloff = 5
 
 vim.o.signcolumn = "yes:1"

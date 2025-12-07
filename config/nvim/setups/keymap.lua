@@ -12,12 +12,29 @@ vim.keymap.set("n", "<Leader>j", "<C-w>j")
 vim.keymap.set("n", "<Leader>k", "<C-w>k")
 vim.keymap.set("n", "<Leader>l", "<C-w>l")
 
-vim.keymap.set("n", "<Leader>1", "1gt")
-vim.keymap.set("n", "<Leader>2", "2gt")
-vim.keymap.set("n", "<Leader>3", "3gt")
-vim.keymap.set("n", "<Leader>4", "5gt")
-vim.keymap.set("n", "<Leader>5", "5gt")
-vim.keymap.set("n", "<Leader>6", "6gt")
+
+for i=1,9 do
+	vim.keymap.set("n", "<Leader>" .. i, i .. "gt")
+end
+
+vim.keymap.set("n", "<Leader>tn", "<cmd>tabnew<CR>")
+
+vim.keymap.set("n", "<Leader>tf", function()
+	vim.cmd[[tabnew]]
+	Snacks.picker.files()
+end)
+
+vim.keymap.set("n", "<Leader>tb", function()
+	vim.cmd[[tabnew]]
+	Snacks.picker.buffers()
+end)
+
+vim.keymap.set("n", "<Leader>te", function()
+	vim.cmd[[tabnew]]
+	Snacks.explorer.reveal()
+end)
+
+vim.keymap.set("n", "<Leader>tr", "<cmd>tab term<CR>")
 
 -- LSP
 vim.keymap.set("n", "<Leader>ee", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap=true, silent=true })
@@ -30,9 +47,10 @@ vim.keymap.set("n", "<Leader>fs", function() Snacks.picker.treesitter() end, { n
 vim.keymap.set("n", "<Leader>fd", function() Snacks.picker.diagnostics() end, { noremap=true, silent=true })
 vim.keymap.set("n", "<Leader>fb", function() Snacks.picker.buffers() end, { noremap=true, silent=true })
 vim.keymap.set("n", "<Leader>fp", function() Snacks.explorer.reveal() end, { noremap=true, silent=true })
+vim.keymap.set("n", "<Leader>fq", function() Snacks.picker.pickers() end, { noremap=true, silent=true })
 
 -- Format files based on filetype
-vim.keymap.set("n", "<Leader>fm", function(_)
+vim.keymap.set("n", "<Leader>fm", function()
 	vim.cmd[[w]]
 	if vim.lsp.status() ==# "" then
 
