@@ -54,17 +54,24 @@ require("lazy").setup({
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		config = function ()
-			local configs = require("nvim-treesitter.configs")
-
-			configs.setup({
-				ensure_installed = { "gdscript", "cpp", "c", "rust", "lua", "vim", "vimdoc", "python", "javascript", "html", "css", "go", "toml" },
-				sync_install = false,
-				highlight = { enable = true },
-				indent = { enable = true },
-				format = { enable = true }
-			})
-		end
+		lazy = false,
+		main = "nvim-treesitter.configs",
+		branch = "master",
+		opts = {
+			ensure_installed = { "gdscript", "cpp", "c", "rust", "lua", "vim", "vimdoc", "python", "javascript", "html", "css", "go", "toml" },
+			sync_install = false,
+			highlight = { enable = true },
+			indent = { enable = true },
+			format = { enable = true }
+		},
+		config = function(_, opts)
+			-- Protective call: If treesitter fails to load, don't crash neovim
+			local status_ok, configs = pcall(require, "nvim-treesitter.configs")
+			if not status_ok then
+				return
+			end
+			configs.setup(opts)
+		end,
 	},
 
 	-- Telescope
